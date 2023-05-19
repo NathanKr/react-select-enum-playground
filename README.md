@@ -2,7 +2,7 @@
 Expreriment with enum based select which may be very common
 
 <h2>Design<h2>
-The result is a generic component GenericEnumBasedSelect whith enum key as option value and enum value as option text
+The result is a generic component GenericEnumBasedSelect whith enum key e.g. 'green' as option value and enum value e.g. 'Green' as option text
 
 
 <h2>Usage<h2>
