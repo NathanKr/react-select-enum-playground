@@ -4,10 +4,14 @@ import { getEnumKeyValues } from "../lib/utils";
 interface IProps {
   _enum: object;
   changeHandler: (newOption: string) => void;
-  initialOption:string
+  initialOption: string;
 }
 
-const GenericEnumBasedSelect: FC<IProps> = ({ _enum, changeHandler ,initialOption}) => {
+const GenericEnumBasedSelect: FC<IProps> = ({
+  _enum,
+  changeHandler,
+  initialOption,
+}) => {
   const array = getEnumKeyValues(_enum);
   const optionElems = array.map((it, i) => (
     <option key={i} value={it.key}>
@@ -15,17 +19,21 @@ const GenericEnumBasedSelect: FC<IProps> = ({ _enum, changeHandler ,initialOptio
     </option>
   ));
   const selectElem = (
-    <select defaultValue={initialOption} onChange={(evt) => changeHandler(evt.target.value)}>
+    <select
+      defaultValue={initialOption}
+      onChange={(evt) => changeHandler(evt.target.value)}
+    >
       {optionElems}
     </select>
   );
 
-  return (
-    <div>
-      <h2>GenericEnumBasedSelect</h2>
-      {selectElem}
-    </div>
-  );
+  if (!Object.keys(_enum).includes(initialOption)) {
+    console.error(
+      `Wrong initial option : ${initialOption} . use only enum key`
+    );
+  }
+
+  return <div>{selectElem}</div>;
 };
 
 export default GenericEnumBasedSelect;

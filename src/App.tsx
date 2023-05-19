@@ -5,6 +5,7 @@ import { Color } from "./types/e-color";
 function App() {
   return (
     <>
+      <h2>GenericEnumBasedSelect</h2>
       <GenericEnumBasedSelect
         _enum={Color}
         changeHandler={(newOption: string) => console.log(newOption)}
