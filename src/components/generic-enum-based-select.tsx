@@ -1,18 +1,23 @@
 import { FC } from "react";
-import { getEnumKeyValues } from "../lib/utils";
+import {
+  getEnumKeyFromEnumValue,
+  getEnumKeyValues,
+  getEnumValueFromEnumKey,
+} from "../lib/utils";
 
 interface IProps {
   _enum: object;
   changeHandler: (newOption: string) => void;
-  initialOption: string;
+  defaultValue: string;
 }
 
 const GenericEnumBasedSelect: FC<IProps> = ({
   _enum,
   changeHandler,
-  initialOption,
+  defaultValue,
 }) => {
   const array = getEnumKeyValues(_enum);
+  const defaultValueAsEnumKey = getEnumKeyFromEnumValue(_enum, defaultValue);
   const optionElems = array.map((it, i) => (
     <option key={i} value={it.key}>
       {it.value}
@@ -20,18 +25,22 @@ const GenericEnumBasedSelect: FC<IProps> = ({
   ));
   const selectElem = (
     <select
-      defaultValue={initialOption}
-      onChange={(evt) => changeHandler(evt.target.value)}
+      defaultValue={defaultValueAsEnumKey}
+      onChange={(evt) => {
+        const enumKey = evt.target.value;
+        const enumValue = getEnumValueFromEnumKey(_enum, enumKey);
+        changeHandler(enumValue);
+      }}
     >
       {optionElems}
     </select>
   );
 
-  if (!Object.keys(_enum).includes(initialOption)) {
-    console.error(
-      `Wrong initial option : ${initialOption} . use only enum key`
-    );
-  }
+  // if (!Object.keys(_enum).includes(_defaultValue)) {
+  //   console.error(
+  //     `Wrong initial option : ${_defaultValue} . use only enum key`
+  //   );
+  // }
 
   return <div>{selectElem}</div>;
 };
