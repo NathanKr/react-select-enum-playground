@@ -18,11 +18,14 @@ const GenericEnumBasedSelect: FC<IProps> = ({
 }) => {
   const array = getEnumKeyValues(_enum);
   const defaultValueAsEnumKey = getEnumKeyFromEnumValue(_enum, defaultValue);
+
   const optionElems = array.map((it, i) => (
     <option key={i} value={it.key}>
       {it.value}
     </option>
   ));
+
+  
   const selectElem = (
     <select
       defaultValue={defaultValueAsEnumKey}
@@ -36,12 +39,7 @@ const GenericEnumBasedSelect: FC<IProps> = ({
     </select>
   );
 
-  // if (!Object.keys(_enum).includes(_defaultValue)) {
-  //   console.error(
-  //     `Wrong initial option : ${_defaultValue} . use only enum key`
-  //   );
-  // }
-
+  
   return <div>{selectElem}</div>;
 };
 
